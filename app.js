@@ -63,11 +63,11 @@ myModule.ls('./src','js',function(err, data){
     fileList = data;
 });
 module.exports = app;
+var string = 'START:\n'
 module.exports.get('/',function(req,res){
-    res.send('START:\n');
     for(i=0 ;i<fileList.length ;i++){
-        res.send(fileList[i]+'\n');
+       string = string+ fileList[i]+'\n';
     }
-    res.end('END\n');
+    res.end(string +'END\n');
 }).listen('3000');
 
