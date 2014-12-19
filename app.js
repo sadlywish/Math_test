@@ -57,7 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 var fileList ;
-mymodule.ls('/src','js',function(err, data){
+mymodule.ls('./src','js',function(err, data){
     if(err)
         throw err;
     fileList = data;
