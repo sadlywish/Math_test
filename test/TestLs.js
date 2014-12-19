@@ -8,7 +8,6 @@ mymodule.ls('./test/testData','js',function(err,date) {
     virtyList.push("1.js");
     virtyList.push('2.js');
     var count = 0;
-    console.log(fileList.length);
     for (i = 0; i < fileList.length; i++) {
         for (j = 0; j < virtyList.length; j++) {
             if (fileList[i] == virtyList[j]) {
@@ -18,7 +17,7 @@ mymodule.ls('./test/testData','js',function(err,date) {
         }
     }
     if (count >= 2) {
-        console.log("pass");
+        console.log("test5m-2.js:pass");
     } else {
         throw 'not right file list :test5m-2.js'
     }

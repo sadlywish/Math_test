@@ -2,7 +2,7 @@ var ls = function (dir,suffix,callback){
 	var fs = require('fs');
 	var path = require('path');
 	var filelist = new Array();
-    console.log(dir);
+//    console.log(dir);
 	buf = fs.readdir(dir,function(err,date){
 		if(err){
 			return callback(err);
