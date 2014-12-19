@@ -56,7 +56,7 @@ app.use(function(err, req, res, next) {
     });
 });*/
 
-var fileList ;
+var fileList =new Array();
 myModule.ls('./src','js',function(err, data){
     if(err)
         throw err;
