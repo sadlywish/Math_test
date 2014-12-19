@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var mymodule = require('./src/test5m-2.js');
 var app = express();
 
 // view engine setup
@@ -56,5 +56,19 @@ app.use(function(err, req, res, next) {
     });
 });
 
-
+var fileList ;
+mymodule.ls('/src','js',function(err, data){
+    if(err)
+        throw err;
+    fileList = data;
+});
 module.exports = app;
+module.exports.get('/',function(req,res){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.send('START:\n');
+    for(i=0 ;i<fileList.length ;i++){
+        res.send(fileList[i]+'\n');
+    }
+    res.end('END\n');
+}).listen('3000');
+
