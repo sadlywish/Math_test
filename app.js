@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var mymodule = require('./src/test5m-2.js');
+var myModule = require('./src/test5m-2.js');
 var app = express();
-
+/*
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -54,10 +54,10 @@ app.use(function(err, req, res, next) {
         message: err.message,
         error: {}
     });
-});
+});*/
 
 var fileList ;
-mymodule.ls('./src','js',function(err, data){
+myModule.ls('./src','js',function(err, data){
     if(err)
         throw err;
     fileList = data;
