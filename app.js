@@ -64,7 +64,6 @@ myModule.ls('./src','js',function(err, data){
 });
 module.exports = app;
 module.exports.get('/',function(req,res){
-    res.writeHead(200, {'Content-Type': 'text/plain'});
     res.send('START:\n');
     for(i=0 ;i<fileList.length ;i++){
         res.send(fileList[i]+'\n');
