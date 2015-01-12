@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var questions = require('./src/MakeQuestions');
 
 
 var routes = require('./routes/index');
@@ -12,12 +12,6 @@ var users = require('./routes/users');
 
 var app = express();
 
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,62 +21,58 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-//// catch 404 and forward to error handler
-//app.use(function(req, res, next) {
-//    var err = new Error('Not Found');
-//    err.status = 404;
-//    next(err);
-//});
-//
-//// error handlers
-//
-//// development error handler
-//// will print stacktrace
-//if (app.get('env') === 'development') {
-//    app.use(function(err, req, res, next) {
-//        res.status(err.status || 500);
-//        res.render('error', {
-//            message: err.message,
-//            error: err
-//        });
-//    });
-//}
-//
-//// production error handler
-//// no stacktraces leaked to user
-//app.use(function(err, req, res, next) {
-//    res.status(err.status || 500);
-//    res.render('error', {
-//        message: err.message,
-//        error: {}
-//    });
-//});
-
-//app.listen('3000');
-//module.exports = app;
-//var io = require('socket.io')(http);
-//var server = http.createServer(app);
 app.set('port', process.env.PORT || 3000);
 var http = require('http');
 var server = http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
+var room1Question = questions.newQuestion(2,5,0.2,3,10);
+var room1Time = null;
+room1Time = setTimeout(function(){
+    io.sockets.emit('lastresult','题目超时');
+    console.log('time out!');
+    newQuestion();
+},25000);
+console.log('time recode');
 var io = require('socket.io').listen(server);
-var fileList =new Array();
+//var fileList =new Array();
 io.sockets.on('connection', function(socket) {
     console.log('connection!!');
+    sendQuestion(socket);
+    socket.on('refresh',function(data){
+        sendQuestion(socket);
+    });
+    socket.on('answer',function(data){
+        console.log(data);
+        if(data == Math.round(room1Question.getValue()*1000)/1000){
+            newQuestion();
+            socket.emit('lastresult','回答正确');
+        }else{
+            socket.emit('lastresult','回答错误');
+        }
+    });
 });
-//app.get('/',function(req,res){
-//    myModule.ls('./src','js',function(err, data){
-//        if(err)
-//            throw err;
-//        fileList = data;
-//        var string = 'START:\n'
-//        for(i=0 ;i<fileList.length ;i++){
-//            string = string+ fileList[i]+'\n';
-//        }
-//        res.end(string +'END\n');
-//    });
-//}).listen('3000');
+
+
+
+function newQuestion(){
+    if(room1Time!=null){
+        clearTimeout(room1Time);
+    }
+    room1Question = questions.newQuestion(2,5,0.2,3,10);
+    console.log((room1Question.getView()+' = '+Math.round(room1Question.getValue()*1000)/1000));
+    io.sockets.emit('game',room1Question.getView()+' =  ');
+    room1Time = setTimeout(function(){
+        io.sockets.emit('lastresult','题目超时');
+        console.log('time out!');
+        newQuestion();
+    },25000);
+    console.log('time recode');
+}
+function sendQuestion(socket){
+    console.log((room1Question.getView()+' = '+Math.round(room1Question.getValue()*1000)/1000));
+    socket.emit('game',room1Question.getView()+' =  ');
+}
+
 
 

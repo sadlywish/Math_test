@@ -1,24 +1,31 @@
 <!doctype html>
-<html>
+<html ng-app="app">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="author" content="Wayou">
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>hichat</title>
+        <title>233</title>
         <!--<link rel="stylesheet" href="styles/main.css">-->
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
     </head>
     <script src="/socket.io/socket.io.js">
     </script>
-    <script src="http://code.angularjs.org/angular-1.0.1.min.js">
+    <script src="javascripts/angular.min.js">
     </script>
-    <script>
-        socket = io.connect(null);
+    <script src="javascripts/socket.js">
     </script>
     <body>
-
+        <div data-ng-controller="questionController">
+            <ul>
+                {{result}}
+            </ul>
+            <ul>
+                {{question}} <input type="text" ng-model="answer">
+            </ul>
+            <ul>
+                <button data-ng-click="sendAnswer()">提交答案</button>
+            </ul>
+        </div>
     </body>
 </html>
