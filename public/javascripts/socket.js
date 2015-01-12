@@ -3,6 +3,7 @@ var socket = io.connect(null);
 app.controller('questionController',function($scope){
     $scope.question = '';
     $scope.answer = '';
+    $scope.result=' '
     $scope.sendAnswer = function(){
         socket.emit('answer',$scope.answer);
     }
