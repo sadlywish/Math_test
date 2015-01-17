@@ -1,0 +1,1 @@
+/* Set the defaults for DataTables initialisation */

@@ -119,7 +119,7 @@ function NumUnit(input,state1) {
 var RQ = function randomQuestions(min ,max ,rate, mutirate, maxnum){
     var num = Math.random()*(max - min)+min;
     return new Unit(num,rate, mutirate,maxnum);
-}
+};
 
 
 //for(i=0;i<10;i++){
