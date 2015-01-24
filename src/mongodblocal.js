@@ -14,7 +14,7 @@ var gameInfoSchema = new mongoose.Schema
     username : {type : String, default :''},
     date     : {type : String, default :''},
     no       : {type : Number, default : 0},
-    grade    : {type : Number, default : 0},
+    grade    : {type : Number, default : 0}
     
 });
 var gameInfoModel = mongoose.model('gameInfo',gameInfoSchema);//创建schema对应的模型
@@ -23,7 +23,7 @@ var gameInfoModel = mongoose.model('gameInfo',gameInfoSchema);//创建schema对�
 var userSchema = new mongoose.Schema
 ({
     Username : {type : String, default : '' },
-    password : {type : String,default : '' },
+    password : {type : String,default : '' }
     
 });
 
@@ -44,7 +44,6 @@ function login(username, password,callback){
 	}
 }
 function register(username, password,callback){
-    return true;
  //   验证注册名是否已经存在
     userSchema.methods.findbyusername = function(username,callback) {
 		this.model('mongoose').find({username: username}, function(err,data){
@@ -71,13 +70,12 @@ function saveGameInfo(roomNum, username, date ,no,grade)
 {
 
 
-	var  savegameInfo = new gameInfo
-	({
+	var  savegameInfo = new gameInfo({
 		roomNum  : ' ',//获取下列信息
 		username : ' ',
 		date     : ' ',
 		no       : ' ',
-		grade    : ' ',
+		grade    : ' '
 	});    
 
 	savegameInfo.save(function(err,gameInfo){

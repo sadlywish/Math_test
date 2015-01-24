@@ -16,7 +16,7 @@ function Unit(num ,rate,mutirate,maxnum){
 //        console.log('1');
         muti = new MultiplyUnit(1,rate,mutirate,maxnum);
 
-    }
+    };
     inti();
     this.getValue = function(){
         switch (method){

@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var questions = require('./src/MakeQuestions');
-var DB = require('./src/mongodblocal');
+var DB = require('./src/DBdemo');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -229,7 +229,7 @@ function room(roomName1, maxNum1, timeout1, min1, max1, rate1, mutirate1, maxNum
                     DB.saveGameInfo(leaderList[i].user, '2015/1/17', leaderList[i].no, leaderList[i].grade);
                 }
             });
-            getWaitInfo()
+            getWaitInfo();
             clients(getRoomName(),function(userList) {
                 var leaderboard = new Array(userList.length);
                 for (i = 0; i < userList.length; i++) {
@@ -252,6 +252,7 @@ function room(roomName1, maxNum1, timeout1, min1, max1, rate1, mutirate1, maxNum
                     leaderboard[i].socket.emit('endinfo', {no: leaderboard[i].no, grade: leaderboard[i].grade});
                 }
             });
+            num =0;
             clients(getRoomName(),function(playerList){
                 for(i = 0;i<playerList.length;i++){
                     emitUserInfo(playerList[i]);
